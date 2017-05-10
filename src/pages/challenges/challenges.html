@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-navbar color="orange" hideBackButton>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Retos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-grid>
+		<ion-row>
+			<ion-col col-2>
+				<ion-card>
+					<ion-card-header class="title-card-header">Añade un reto</ion-card-header>
+					<ion-card-content>
+						<form [formGroup]="challengeForm" (ngSubmit)="onSubmit()" class="form-content">
+							<ion-item>
+								<ion-label floatting color="orange">
+									Nombre:
+								</ion-label>
+								<ion-input type="text" formControlName="name"></ion-input>
+							</ion-item>
+							<ion-list radio-group formControlName="objective" no-lines text-wrap inset>
+								<ion-item>
+							    	<ion-label>Calorías</ion-label>
+							    	<ion-radio color="orange" checked="true" value="calorías"></ion-radio>
+							  	</ion-item>
+							  	<ion-item>
+								    <ion-label>Pasos</ion-label>
+								    <ion-radio color="orange" value="pasos"></ion-radio>
+							  	</ion-item>
+							  	<ion-item>
+								    <ion-label>Distancia</ion-label>
+								    <ion-radio color="orange" value="distancia"></ion-radio>
+							  	</ion-item>
+							</ion-list>
+							<ion-item>
+								<ion-label floatting color="orange">
+									Cantidad:
+								</ion-label>
+								<ion-input type="text" formControlName="quantity"></ion-input>
+							</ion-item>
+							<ion-list radio-group formControlName="time" no-lines text-wrap inset >
+							  <ion-item>
+							    <ion-label>Diario</ion-label>
+							    <ion-radio color="orange" checked="true" value="diario"></ion-radio>
+							  </ion-item>
+							  <ion-item>
+							    <ion-label>Semanal</ion-label>
+							    <ion-radio color="orange" value="semanal"></ion-radio>
+							  </ion-item>
+							  <ion-item>
+							    <ion-label>Mensual</ion-label>
+							    <ion-radio color="orange" value="mensual"></ion-radio>
+							  </ion-item>
+							</ion-list>
+							<ion-list>
+								<ion-item class="challenge">Reta a tus amigos</ion-item>
+								<ion-item *ngFor=" let friend of friends ">
+							    	<ion-label>{{friend}}</ion-label>
+									<ion-checkbox (click)=clickFriendsSelectBox(friend) color="orange" ></ion-checkbox>
+							    </ion-item>
+							</ion-list>
+							<button class="formButton" ion-button type="submit" [disabled]="!challengeForm.valid">Añadir</button>
+						</form>
+					</ion-card-content>
+				</ion-card>
+			</ion-col>
+			<ion-col col-10>
+			<ion-grid>
+				<ion-row>
+					<ion-col col-3 *ngFor=" let challenge of challenges; let i=index ">
+						<ion-card>
+							<ion-card-header class="title-card-full">{{challengesNames[i]}}</ion-card-header>
+							<ion-card-content class="content-card-full">
+								<ion-list inset  text-wrap>
+								    <ion-item *ngFor=" let challengeData of challenge let j=index ">
+								    	{{fields[j]}}: {{challengeData.charAt(0).toUpperCase()+challengeData.substr(1)}}
+								    </ion-item>
+								</ion-list>
+								<button ion-button outline color="danger" (click)="removeChallenge(i)">Eliminar</button>
+							</ion-card-content>
+						</ion-card>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>
+

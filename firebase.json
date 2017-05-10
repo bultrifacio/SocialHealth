@@ -1,0 +1,9 @@
+{
+  "firebase": "socialhealth-6ce5a",
+  "public": "www",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

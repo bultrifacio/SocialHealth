@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar color="orange" hideBackButton>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Amigos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-grid>
+		<ion-row>
+			<ion-col col-4 *ngFor="let item of friendsData ">
+				<ion-card>
+				 	<ion-card-header class="title-card-header">
+				 		{{item.name}}
+				 	</ion-card-header>
+				 	<ion-card-content>
+		        		<ion-grid>
+		        			<ion-row>
+		        				<ion-col *ngFor="let items of item.items | async; let i=index ">
+		        					<ion-item class="text-card-content" >
+		        						<ion-icon [name]="icons[i]" color="white"> {{items.$key.charAt(0).toUpperCase()+items.$key.slice(1)}}</ion-icon>
+		        						<br><br>
+			           					 {{items.$value}} {{units[i]}}
+					        		</ion-item>
+		        				</ion-col>
+		        			</ion-row>
+		        		</ion-grid>  
+			        </ion-card-content>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+    </ion-grid>
+</ion-content>

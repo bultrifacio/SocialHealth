@@ -1,0 +1,57 @@
+page-profile {
+
+    .login-box {
+      width: 20%;
+      height: 50%;
+      padding: 40px 40px 40px 40px;
+      margin-top: 10%;
+      margin-left: 40%;
+      margin-rigth: 40%;
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+      text-align: center;
+      background: white;
+    }
+    .first{
+        float:left;
+    }
+    .user-card{
+      width: 100%;
+      height: auto;
+      /* margin-left: 40%; */
+      /* margin-rigth: 40%; */
+      overflow: auto;
+    }
+    .background-image{
+        background: url(../assets/img/aaa.jpg);
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: auto;
+        position: relative;
+    }
+    .button-google-sign{
+    	margin-top: 10%;
+
+    }
+    .user-photo{
+      margin: auto;
+      border-radius: 50%;
+      width: 200px;
+      height: 200px
+    }
+    .center {
+      margin: auto;
+      width: 50%;
+      border: 3px solid green;
+      padding: 10px;
+    }
+    .title-card-header{
+      color: white;
+      text-align: center;
+    }
+    .card-header{
+      background-color: #F8B136;
+    }
+    .text-card-content{
+      text-align: center;
+    }
+}
