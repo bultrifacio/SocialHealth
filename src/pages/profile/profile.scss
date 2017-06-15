@@ -1,15 +1,11 @@
 page-profile {
-
-    .login-box {
-      width: 20%;
-      height: 50%;
-      padding: 40px 40px 40px 40px;
-      margin-top: 10%;
-      margin-left: 40%;
-      margin-rigth: 40%;
-      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-      text-align: center;
-      background: white;
+    .title{
+      text-align:center;
+      color: orange;
+    }
+    .comentary{
+      color:orange;
+      font-size: 14px;
     }
     .first{
         float:left;
@@ -17,8 +13,6 @@ page-profile {
     .user-card{
       width: 100%;
       height: auto;
-      /* margin-left: 40%; */
-      /* margin-rigth: 40%; */
       overflow: auto;
     }
     .background-image{
@@ -40,9 +34,9 @@ page-profile {
     }
     .center {
       margin: auto;
-      width: 50%;
-      border: 3px solid green;
+      width: 100%;
       padding: 10px;
+      text-align: center;
     }
     .title-card-header{
       color: white;
@@ -53,5 +47,15 @@ page-profile {
     }
     .text-card-content{
       text-align: center;
+    }
+    .current {
+      position: absolute;
+      color: #bbb;
+      font-size: x-large;
+      font-weight: 100;
+      line-height: 1;
+      margin-top: 38%;
+      margin-left: 28%;
+      margirn-rigth: 40%
     }
 }

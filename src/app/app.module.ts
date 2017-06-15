@@ -8,13 +8,18 @@ import { MyApp } from './app.component';
 import { ChallengesPage } from '../pages/challenges/challenges';
 import { ProfilePage } from '../pages/profile/profile';
 import { FriendsPage } from '../pages/friends/friends';
+import { LoginPage } from '../pages/login/login';
+import { HistoricalPage } from '../pages/historical/historical';
 import { FriendsSearchPage } from '../pages/friends-search/friends-search';
 import { AuthService } from '../providers/auth-service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { ChartsModule } from 'ng2-charts';
-import { ChartModule } from 'angular-highcharts';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { RoundProgressModule } from 'angular-svg-round-progressbar';
+import { MyDatePickerModule } from 'mydatepicker';
+import { MyDateRangePickerModule } from 'mydaterangepicker';
+
 export const firebaseConfig = {
   apiKey: 'AIzaSyA3ddRM8bJZZf_2AC8tBfWDFtIzmuUWfq4',
   authDomain: 'socialhealth-6ce5a.firebaseapp.com',
@@ -28,14 +33,18 @@ export const firebaseConfig = {
     ProfilePage,
     ChallengesPage,
     FriendsPage,
-    FriendsSearchPage
+    FriendsSearchPage,
+    HistoricalPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ChartsModule,
-    ChartModule,
+    RoundProgressModule,
     AngularFireAuthModule,
+    MyDateRangePickerModule,
+    MyDatePickerModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule
@@ -46,7 +55,9 @@ export const firebaseConfig = {
     ProfilePage,
     ChallengesPage,
     FriendsPage,
-    FriendsSearchPage
+    FriendsSearchPage,
+    HistoricalPage,
+    LoginPage
   ],
   providers: [
     AuthService,

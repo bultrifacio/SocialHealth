@@ -4,7 +4,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ChallengesPage } from '../pages/challenges/challenges';
 import { ProfilePage } from '../pages/profile/profile';
+import { LoginPage } from '../pages/login/login';
 import { FriendsPage } from '../pages/friends/friends';
+import { HistoricalPage } from '../pages/historical/historical';
 import { FriendsSearchPage } from '../pages/friends-search/friends-search';
 import { AuthService } from '../providers/auth-service';
 
@@ -14,35 +16,33 @@ import { AuthService } from '../providers/auth-service';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ProfilePage;
+  rootPage: any = LoginPage;
 
   pages: Array<{title: string,icon: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,private _auth: AuthService) {
     this.initializeApp();
-
-    // used for an example of ngFor and navigation
+    if (this._auth.authenticated) {
+      this.rootPage = ProfilePage;
+    }
     this.pages = [
       { title: 'Inicio',icon: 'home', component: ProfilePage },
       { title: 'Amigos',icon: 'contacts', component: FriendsPage },
       { title: 'Búsqueda de amigos',icon: 'search', component: FriendsSearchPage },
-      { title: 'Retos',icon: 'medal', component: ChallengesPage }
+      { title: 'Retos',icon: 'medal', component: ChallengesPage },
+      { title: 'Histórico',icon: 'calendar', component: HistoricalPage }
     ];
 
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
 }

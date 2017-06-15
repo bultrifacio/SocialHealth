@@ -19,8 +19,10 @@
 								<ion-label floatting color="orange">
 									Nombre:
 								</ion-label>
-								<ion-input type="text" formControlName="name"></ion-input>
+								<ion-input type="text" formControlName="name" clearInput></ion-input>
+
 							</ion-item>
+							<p class="legend">Puede usar letras, números, puntos y guión bajo.</p>
 							<ion-list radio-group formControlName="objective" no-lines text-wrap inset>
 								<ion-item>
 							    	<ion-label>Calorías</ion-label>
@@ -39,29 +41,13 @@
 								<ion-label floatting color="orange">
 									Cantidad:
 								</ion-label>
-								<ion-input type="text" formControlName="quantity"></ion-input>
+								<ion-input type="text" formControlName="quantity" clearInput></ion-input>
 							</ion-item>
-							<ion-list radio-group formControlName="time" no-lines text-wrap inset >
-							  <ion-item>
-							    <ion-label>Diario</ion-label>
-							    <ion-radio color="orange" checked="true" value="diario"></ion-radio>
-							  </ion-item>
-							  <ion-item>
-							    <ion-label>Semanal</ion-label>
-							    <ion-radio color="orange" value="semanal"></ion-radio>
-							  </ion-item>
-							  <ion-item>
-							    <ion-label>Mensual</ion-label>
-							    <ion-radio color="orange" value="mensual"></ion-radio>
-							  </ion-item>
-							</ion-list>
-							<ion-list>
-								<ion-item class="challenge">Reta a tus amigos</ion-item>
-								<ion-item *ngFor=" let friend of friends ">
-							    	<ion-label>{{friend}}</ion-label>
-									<ion-checkbox (click)=clickFriendsSelectBox(friend) color="orange" ></ion-checkbox>
-							    </ion-item>
-							</ion-list>
+							<ion-item class="challenge">Reta a tus amigos</ion-item>
+							<ion-item *ngFor=" let friend of friends ">
+						    	<ion-label>{{friend}}</ion-label>
+								<ion-checkbox (click)=clickFriendsSelectBox(friend) color="orange" ></ion-checkbox>
+						    </ion-item>
 							<button class="formButton" ion-button type="submit" [disabled]="!challengeForm.valid">Añadir</button>
 						</form>
 					</ion-card-content>

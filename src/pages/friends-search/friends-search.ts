@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase} from 'angularfire2/database';
 import { AuthService } from '../../providers/auth-service';
-import { ProfilePage } from '../profile/profile';
 
 @Component({
   selector: 'page-friends-search',

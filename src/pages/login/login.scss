@@ -1,0 +1,28 @@
+page-login {
+	.login-box {
+      width: 20%;
+      height: 52%;
+      padding: 40px 40px 40px 40px;
+      margin-top: 10%;
+      margin-left: 40%;
+      margin-rigth: 40%;
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+      text-align: center;
+      background: white;
+    }
+    .title{
+    	margin-top: %1;
+      color: orange;
+      font-size: 50px;
+    }
+     .background-image{
+        background: url(../assets/img/aaa.jpg);
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: auto;
+        position: absolute;
+    }
+    .button-google-sign{
+    	margin-top: 5%;
+    }
+}

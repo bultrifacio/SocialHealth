@@ -8,28 +8,58 @@
 </ion-header>
 
 <ion-content padding>
-	<ion-grid>
-		<ion-row>
-			<ion-col col-4 *ngFor="let item of friendsData ">
-				<ion-card>
-				 	<ion-card-header class="title-card-header">
-				 		{{item.name}}
-				 	</ion-card-header>
-				 	<ion-card-content>
-		        		<ion-grid>
-		        			<ion-row>
-		        				<ion-col *ngFor="let items of item.items | async; let i=index ">
-		        					<ion-item class="text-card-content" >
-		        						<ion-icon [name]="icons[i]" color="white"> {{items.$key.charAt(0).toUpperCase()+items.$key.slice(1)}}</ion-icon>
-		        						<br><br>
-			           					 {{items.$value}} {{units[i]}}
-					        		</ion-item>
-		        				</ion-col>
-		        			</ion-row>
-		        		</ion-grid>  
-			        </ion-card-content>
-				</ion-card>
-			</ion-col>
-		</ion-row>
-    </ion-grid>
+	<div *ngIf="isFriendsAvailable">
+		<ion-grid>
+			<ion-row *ngFor=" let friend of allFriendsData ">
+				<ion-col col-2>
+					<ion-card>
+		              <img [src]="(friend.user | async)?.photoUrl" />
+		              <ion-card-content>
+		                <ion-card-title>
+		                  {{ friend.nick }}
+		                </ion-card-title>
+		                {{(friend.user | async)?.nombre}}
+		              </ion-card-content>
+		            </ion-card>
+				</ion-col>
+				<ion-col col-2>
+					<ion-card>
+		              <ion-card-content>
+		                <ion-list>
+		                	<ion-item *ngFor=" let item of friend.items | async; let i=index ">
+		                		<ion-icon [name]="icons[i]" color="orange"> {{item.$key.charAt(0).toUpperCase()+item.$key.slice(1)}}</ion-icon>
+	           					{{item.$value}} {{units[i]}}
+		                	</ion-item>
+		                </ion-list>
+		              </ion-card-content>
+		            </ion-card>
+				</ion-col>
+				<ion-col col-2 *ngFor=" let challenge of friend.challenges; let i=index ">
+					<ion-card>
+		              <ion-card-header class="title-card-header">
+		                      <ion-icon color="white" name="medal"> {{ friend.challengesNames[i] }}</ion-icon>
+		               </ion-card-header>
+		                <ion-card-content class="center">
+		                    <ion-list inset  text-wrap>
+		                        <ion-item *ngFor=" let challengeData of challenge; let j=index ">
+		                         {{fields[j]}}: {{challengeData.charAt(0).toUpperCase()+challengeData.substr(1)}}
+		                        </ion-item>
+		                      </ion-list>
+		                      <br>
+		                      <div class="current">{{ friend.challengesProgress[i] }}/{{ 100 }}</div>
+		                      <round-progress 
+		                      current={{friend.challengesProgress[i]}} 
+		                      max=100
+		                      color="orange"
+		                      responsive="true"
+		                      rounded="true"
+		                      stroke=20
+		                      ></round-progress>
+		                </ion-card-content>
+		            </ion-card>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</div>
+	
 </ion-content>

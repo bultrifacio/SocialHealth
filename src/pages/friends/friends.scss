@@ -10,5 +10,18 @@ page-friends {
 	.text-card-content{
 		text-align: center;
 	}
+	.current {
+      position: absolute;
+      color: #bbb;
+      font-size: x-large;
+      font-weight: 100;
+      line-height: 1;
+      margin-top: 36%;
+      margin-left: 28%;
+      margirn-rigth: 40%
+    }
+    .div-box{
+		box-shadow: 1px 1px 1px #888888;
+	}
 
 }

@@ -1,11 +1,11 @@
 <ion-header>
-  <ion-navbar color="orange" hideBackButton>
+  <ion-navbar [hidden]="!isAuthenticated()" color="orange" hideBackButton>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Mi Perfil</ion-title>
+    <ion-title>Inicio</ion-title>
     <ion-buttons end>
-    <button ion-button icon-left (click)="signOut()"><ion-icon name="exit"></ion-icon>Cerrar sesión</button>
+    <button [hidden]="!isAuthenticated()" ion-button icon-left (click)="signOut()"><ion-icon name="exit"></ion-icon>Cerrar sesión</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -15,26 +15,27 @@
   <ion-grid>
       <ion-row>
         <ion-col col-2>
-          <ion-card>
-            <img [src]="user.photo" />
-            <ion-card-content>
-              <ion-card-title>
-                {{ user.name }}
-              </ion-card-title>
-              <ion-list>
-                <ion-item>{{ user.email }}</ion-item>
-                <ion-item>
-                  Altura : {{(measurements | async)?.altura }} m
-                </ion-item>
-                <ion-item>
-                  Peso :  {{(measurements | async)?.peso }} kg
-                </ion-item>
-              </ion-list>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-        <ion-col col-2>
-           <ion-card>
+          <div *ngIf="isUserInfoAvailable">
+            <ion-card>
+              <img [src]="photo" />
+              <ion-card-content>
+                <ion-card-title>
+                  {{ name }}
+                </ion-card-title>
+                <ion-list>
+                  <ion-item>{{ email }}</ion-item>
+                  <ion-item>
+                    Altura : {{(measurements | async)?.altura }} m
+                  </ion-item>
+                  <ion-item>
+                    Peso :  {{(measurements | async)?.peso }} kg
+                  </ion-item>
+                </ion-list>
+              </ion-card-content>
+            </ion-card>
+          </div>
+          <div *ngIf="areFriendsAvailable">
+            <ion-card>
               <ion-card-content>
                 <ion-card-title color="orange">
                   Amigos
@@ -49,10 +50,11 @@
                 </ion-list>
               </ion-card-content>
             </ion-card>
+          </div>      
         </ion-col>
         <ion-col col-8>
           <ion-grid>
-            <ion-row>
+            <ion-row *ngIf="isDailyDataAvailable">
                <ion-col col-2 *ngFor="let item of dailyItems | async; let i=index ">
                 <ion-card>
                   <ion-card-header class="title-card-header">
@@ -65,69 +67,78 @@
                   </ion-card-content>
                 </ion-card>
               </ion-col>
-               <ion-col col-2 >
-                <ion-card>
-                  <ion-card-header class="title-card-header">
-                    <ion-icon name="heart" color="white"> Pulsaciones</ion-icon>
-                  </ion-card-header>  
-                  <ion-card-content >
-                    <ion-list inset text-wrap>
-                      <ion-item *ngFor="let item of lastHeartRateItems | async " class="text-card-content">
-                        {{item.$value}} bpm
-                      </ion-item>
-                    </ion-list>
-                  </ion-card-content>
-                </ion-card>
-              </ion-col>
-              <ion-col col-2>
-                <ion-card>
-                  <ion-card-header class="title-card-header">
-                      <ion-icon name="medkit" color="white"> Glucosa</ion-icon>
-                  </ion-card-header>  
-                  <ion-card-content class="text-card-content">
-                    <ion-list inset text-wrap>
-                      <ion-item *ngFor="let item of lastGlucoseItems | async " class="text-card-content">
-                        {{item.$value}} mg/dl
-                      </ion-item>
-                    </ion-list>
-                  </ion-card-content>
-                </ion-card>
-              </ion-col>
-              <ion-col col-4>
-                <ion-card>
+            </ion-row>
+            <ion-row>
+              <ion-col col-4 *ngIf="isHeartRateAvailable">
+                <ion-card >
                   <ion-card-header class="title-card-header">
                     <ion-icon name="heart" color="white"> Pulsaciones</ion-icon>
                   </ion-card-header>
                   <ion-card-content>
-                  <br><br>
-                    <div [chart]="chart"></div>
-                     <canvas baseChart width="400" height="400"
-                          [datasets]="lineChartData"
-                          [labels]="lineChartLabels"
-                          [options]="lineChartOptions"
-                          [colors]="lineChartColors"
-                          [legend]="lineChartLegend"
-                          [chartType]="lineChartType"></canvas>
+                      <br>
+                      <p class="comentary">En la última hora</p>
+                      <br>
+                      <canvas baseChart width="400" height="400"
+                          [datasets]="heartRateChartData"
+                          [labels]="heartRateLabels"
+                          [options]="heartRateChartOptions"
+                          [colors]="heartRateChartColors"
+                          [legend]="chartLegend"
+                          [chartType]="heartRateChartType"></canvas>
                   </ion-card-content>
                 </ion-card>
               </ion-col>
-            </ion-row>
+              <ion-col col-4 *ngIf="isGlucoseAvailable">
+                <ion-card >
+                  <ion-card-header class="title-card-header">
+                    <ion-icon name="medkit" color="white"> Glucosa</ion-icon>
+                  </ion-card-header>
+                  <ion-card-content>
+                      <br>
+                      <p class="comentary">En la última hora</p>
+                      <br>    
+                      <canvas baseChart width="400" height="400"
+                          [datasets]="glucoseChartData"
+                          [labels]="glucoseLabels"
+                          [options]="glucoseChartOptions"
+                          [colors]="glucoseChartColors"
+                          [legend]="chartLegend"
+                          [chartType]="glucoseChartType"></canvas>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+              </ion-row>
+            <div *ngIf="areChallengesAvailable">
+              <ion-row>
+                <ion-col col-3 *ngFor=" let challenge of challenges; let i=index ">
+                  <ion-card>
+                    <ion-card-header class="title-card-header">
+                      <ion-icon color="white" name="medal"> {{challengesNames[i]}}</ion-icon>
+                    </ion-card-header>
+                    <ion-card-content class="center">
+                      <ion-list inset  text-wrap>
+                        <ion-item *ngFor=" let challengeData of challenge; let j=index">
+                          {{fields[j]}}: {{challengeData.charAt(0).toUpperCase()+challengeData.substr(1)}}
+                        </ion-item>
+                      </ion-list>
+                      <br>
+                      <div class="current">{{ challengesProgress[i] }}/{{ 100 }}</div>
+                      <round-progress 
+                      current={{challengesProgress[i]}} 
+                      max=100
+                      color="orange"
+                      responsive="true"
+                      rounded="true"
+                      stroke=20
+                      ></round-progress>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                </ion-row>
+              </div>
           </ion-grid>
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
-
-
-
-  <div [hidden]="isAuthenticated()">
-    <div class="login-box">
-      <img src="assets/img/user_icon300.jpg">
-      <button ion-button color="google" icon-left class="button-google-sign"  (click)="signIn()">
-        <ion-icon name='globe'></ion-icon>
-         Inicia sesión con Google
-      </button>
-    </div>
-  </div>
-
 </ion-content>

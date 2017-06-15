@@ -1,0 +1,204 @@
+page-historical {
+	.title-card-header{
+		color: #F8B136;
+		text-align: center;
+	}
+	.guide-text {
+		color: orange;
+	}
+	.div-box{
+		box-shadow: 1px 1px 1px #888888;
+	}
+	.form-content-single{
+		text-align: center;
+		margin-left: 17px;
+		margin-right: 21px;
+	}
+	.form-content-range{
+		text-align: center;
+		margin-left: 17px;
+		margin-right: 21px;
+	}
+	.text-card-content{
+		text-align: center;
+	}
+	.title-card-full{
+		background-color: #F8B136;
+		text-align: center;
+		color: white;
+	}
+	.date{
+		color: #F8B136;
+	}
+	.content-card-full{
+		text-align: center;
+	}
+	.data-card-header{
+      color: white;
+      text-align: center;
+      background-color: #F8B136;
+    }
+	.formButton{
+		margin:auto;
+		text-align:center;
+		background-color: orange;
+	}
+	.mydp .selection,
+	.mydp .monthinput,
+	.mydp .yearinput {
+	    font-weight: normal;
+	    color: orange;
+	}
+	.mydp .weekdaytitle {
+	    color: orange;
+	    background-color: white;
+	}
+	.mydp,
+	.mydp .selectiongroup,
+	.mydp .selector {
+	    border-radius: 6px;
+	    color:orange;
+	}
+	.mydp .selectorarrow:focus:before {
+  		border-bottom-color: orange;
+	}
+	.mydp .selector:focus {
+		border: 1px solid orange;
+		outline: none;
+	}
+	.mydp .headerbtncell {
+	    background-color: white;
+	    display: table-cell;
+	    vertical-align: middle;
+	}
+	.mydp .headerbtn{
+		background-color: white;
+	}
+	.mydp .headerlabelbtn{
+		background-color: white;
+	}
+
+	.mydp .monthcell {
+	    background-color: white;
+	    overflow: hidden;
+	    white-space: nowrap;
+	}
+	.mydp .yearcell {
+	    background-color: white;
+	    overflow: hidden;
+	    white-space: nowrap;
+	}
+
+	.mydp .header {
+	    border-radius: 6px 6px 0 0;
+		background-color: white;
+	}
+	.mydp .monthlabel{
+		color: orange;
+	}
+	.mydp .yearlabel{
+		color: orange;
+	}
+	.mydp .caltable {
+	    border-radius: 0 0 6px 6px;
+	}
+	.mydp .headertodaybtnenabled:hover {
+    	background-color: orange;
+	}
+	.mydp .daycell {
+		background-color: white
+	}
+	.mydp .caltable tbody tr:nth-child(6) td:first-child {
+	    border-bottom-left-radius: 6px;
+
+	}
+	.mydp .caltable tbody tr:nth-child(6) td:last-child {
+	    border-bottom-right-radius: 6px;
+	}
+	.mydp .btnpicker {
+	    border-radius: 0 6px 6px 0;
+	    color: orange;
+	}
+	.mydp .btnclear{
+		color: #F21515;
+	}
+	.mydrp .selection,
+	.mydrp .monthinput,
+	.mydrp .yearinput {
+	    font-weight: normal;
+	    color: orange;
+	}
+	.mydrp .weekdaytitle {
+	    color: orange;
+	    background-color: white;
+	}
+	.mydrp,
+	.mydrp .selectiongroup,
+	.mydrp .selector {
+	    border-radius: 6px;
+	    color:orange;
+	}
+	.mydrp .selectorarrow:focus:before {
+  		border-bottom-color: orange;
+	}
+	.mydrp .selector:focus {
+		border: 1px solid orange;
+		outline: none;
+	}
+	.mydrp .headerbtncell {
+	    background-color: white;
+	    display: table-cell;
+	    vertical-align: middle;
+	}
+	.mydrp .headerbtn{
+		background-color: white;
+	}
+	.mydrp .headerlabelbtn{
+		background-color: white;
+	}
+
+	.mydrp .monthcell {
+	    background-color: white;
+	    overflow: hidden;
+	    white-space: nowrap;
+	}
+	.mydrp .yearcell {
+	    background-color: white;
+	    overflow: hidden;
+	    white-space: nowrap;
+	}
+
+	.mydrp .header {
+	    border-radius: 6px 6px 0 0;
+		background-color: white;
+	}
+	.mydrp .monthlabel{
+		color: orange;
+	}
+	.mydrp .yearlabel{
+		color: orange;
+	}
+	.mydrp .caltable {
+	    border-radius: 0 0 6px 6px;
+	}
+	.mydrp .headertodaybtnenabled:hover {
+    	background-color: orange;
+	}
+	.mydrp .daycell {
+		background-color: white
+	}
+	.mydrp .caltable tbody tr:nth-child(6) td:first-child {
+	    border-bottom-left-radius: 6px;
+
+	}
+	.mydrp .caltable tbody tr:nth-child(6) td:last-child {
+	    border-bottom-right-radius: 6px;
+	}
+	.mydrp .btnpicker {
+	    border-radius: 0 6px 6px 0;
+	    color: orange;
+	}
+	.mydrp .btnclear{
+		color: #F21515;
+	}
+}

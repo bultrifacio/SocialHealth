@@ -1,0 +1,248 @@
+<ion-header>
+  <ion-navbar color="orange" hideBackButton>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Histórico</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<ion-grid>
+		<ion-row>
+			<ion-col col-2>
+			<div class="div-box">
+				<ion-toolbar color="white">
+			      	<ion-segment color="orange" [(ngModel)]="calendar">
+					    <ion-segment-button value="singleDate" color="white">
+					        Día
+					    </ion-segment-button>
+					    <ion-segment-button value="rangeDate" color="white">
+					        Intervalo
+					    </ion-segment-button>
+					</ion-segment>
+				</ion-toolbar>
+				<div [ngSwitch]="calendar">
+					
+					<form [formGroup]="datePickerForm" *ngSwitchCase="'singleDate'" (ngSubmit)="onSubmit()" class="form-content-single">
+						<p class="guide-text">Selecciona un día</p>
+						<br>
+					    <my-date-picker name="userdate" [options]="datePickerOptions" formControlName="userDate" ></my-date-picker>
+					    <p class="guide-text">Selecciona un tipo</p>
+					    <ion-list radio-group formControlName="dataType" no-lines text-wrap inset>
+							<ion-item>
+						    	<ion-label>Pulsaciones</ion-label>
+						    	<ion-radio color="orange" checked="true" value="heart-rate"></ion-radio>
+						  	</ion-item>
+						  	<ion-item>
+							    <ion-label>Glucosa</ion-label>
+							    <ion-radio color="orange" value="glucose"></ion-radio>
+						  	</ion-item>
+						  	<ion-item>
+							    <ion-label>Todos</ion-label>
+							    <ion-radio color="orange" value="todos"></ion-radio>
+						  	</ion-item>
+						</ion-list>
+						<p class="guide-text">Introduce una hora</p>
+						<ion-item>
+							<ion-label floatting color="orange">
+								Hora:
+							</ion-label>
+							<ion-input type="text" formControlName="userHour" clearInput placeholder={{previousHour}}></ion-input>
+						</ion-item>
+						<p class="guide-text">Para un intervarlo introduce otra</p>
+						<ion-item>
+							<ion-label floatting color="orange">
+								Hora:
+							</ion-label>
+							<ion-input type="text" formControlName="userHourRange" 
+							clearInput placeholder="hh:mm"></ion-input>
+						</ion-item>
+						<br>
+					    <button class="formButton" ion-button type="submit" [disabled]="!datePickerForm.valid">Aceptar</button>
+					</form>
+					<form [formGroup]="dateRangePickerForm" *ngSwitchCase="'rangeDate'" (ngSubmit)="onSubmitRange()" class="form-content-range">
+					<p class="guide-text">Selecciona un intervalo de días</p>
+					<br>
+					    <my-date-range-picker name="userDateRange" [options]="dateRangePickerOptions"  formControlName="userDateRange"></my-date-range-picker>
+					    <p class="guide-text">Selecciona un tipo o todos</p>
+					    <br>
+					    <ion-list radio-group formControlName="dataType" no-lines text-wrap inset>
+							<ion-item>
+						    	<ion-label>Calorías</ion-label>
+						    	<ion-radio color="orange" checked="true" value="calorías"></ion-radio>
+						  	</ion-item>
+						  	<ion-item>
+							    <ion-label>Pasos</ion-label>
+							    <ion-radio color="orange" value="pasos"></ion-radio>
+						  	</ion-item>
+						  	<ion-item>
+							    <ion-label>Distancia</ion-label>
+							    <ion-radio color="orange" value="distancia"></ion-radio>
+						  	</ion-item>
+						  	<ion-item>
+							    <ion-label>Sueño</ion-label>
+							    <ion-radio color="orange" value="sueño"></ion-radio>
+						  	</ion-item>
+						  	<ion-item>
+							    <ion-label>Todos</ion-label>
+							    <ion-radio color="orange" value="todos"></ion-radio>
+						  	</ion-item>
+						</ion-list>
+					    <button class="formButton" ion-button type="submit" [disabled]="!dateRangePickerForm.valid">Aceptar</button>
+					</form>
+					<br>
+				</div>
+			</div>
+			</ion-col>
+			<ion-col col-10 *ngIf="isSingleDateDataAvailable">
+				<ion-grid>
+				<h3 class="date">{{selectedDate}}</h3>
+					<ion-row>
+
+			            <ion-col col-2 *ngFor="let item of dailyItems | async; let i=index ">
+				            <ion-card>
+				            	<ion-card-header class="data-card-header">
+				                	<ion-icon [name]="icons[i]" color="white"> {{item.$key.charAt(0).toUpperCase()+item.$key.slice(1)}}</ion-icon>
+				              	</ion-card-header>  
+				                <ion-card-content class="text-card-content">
+					                <br>
+					                {{item.$value}} {{units[i]}}
+					                <br>
+				              	</ion-card-content>
+				            </ion-card>
+			            </ion-col>
+		            </ion-row>
+	            </ion-grid>
+	        </ion-col>
+	        <ion-col col-10>
+				<ion-grid>
+		            <ion-row>
+			            <ion-col col-4 >
+				            <ion-card *ngIf="isCaloriesDataAvailable" >
+				            	<ion-card-header class="data-card-header">
+				                	<ion-icon name="flame" color="white"> Calorías</ion-icon>
+				              	</ion-card-header>  
+				                <ion-card-content>
+				                  	<br><br>
+				                  	<div class="chart">
+				                    <canvas baseChart width="400" height="400"
+				                          [datasets]="caloriesChartData"
+				                          [labels]="rangeChartLabels"
+				                          [options]="chartOptions"
+				                          [colors]="chartColors"
+				                          [legend]="chartLegend"
+				                          [chartType]="chartType"></canvas>
+				                    </div>
+				                </ion-card-content>
+				            </ion-card>
+			            </ion-col>
+			             <ion-col col-4 >
+				            <ion-card *ngIf="isDistanceDataAvailable" >
+				            	<ion-card-header class="data-card-header">
+				                	<ion-icon  name="map" color="white"> Distancia</ion-icon>
+				              	</ion-card-header>  
+				                <ion-card-content>
+				                  	<br><br>
+				                  	<div class="chart">
+				                    <canvas baseChart width="400" height="400"
+				                          [datasets]="distanceChartData"
+				                          [labels]="rangeChartLabels"
+				                          [options]="chartOptions"
+				                          [colors]="chartColors"
+				                          [legend]="chartLegend"
+				                          [chartType]="chartType"></canvas>
+				                    </div>
+				                </ion-card-content>
+				            </ion-card>
+			            </ion-col>
+		            </ion-row>
+		            <ion-row>
+			            <ion-col col-4 >
+				            <ion-card *ngIf="areStepsDataAvailable" >
+				            	<ion-card-header class="data-card-header">
+				                	<ion-icon  name="walk" color="white"> Pasos</ion-icon>
+				              	</ion-card-header>  
+				                <ion-card-content>
+				                  	<br><br>
+				                  	<div class="chart">
+				                    <canvas baseChart width="400" height="400"
+				                          [datasets]="stepsChartData"
+				                          [labels]="rangeChartLabels"
+				                          [options]="chartOptions"
+				                          [colors]="chartColors"
+				                          [legend]="chartLegend"
+				                          [chartType]="chartType"></canvas>
+				                    </div>
+				                </ion-card-content>
+				            </ion-card>
+			            </ion-col>
+			             <ion-col col-4 >
+				            <ion-card *ngIf="isDreamDataAvailable" >
+				            	<ion-card-header class="data-card-header">
+				                	<ion-icon  name="moon" color="white"> Sueño</ion-icon>
+				              	</ion-card-header>  
+				                <ion-card-content>
+				                  	<br><br>
+				                  	<div class="chart">
+				                    <canvas baseChart width="400" height="400"
+				                          [datasets]="dreamChartData"
+				                          [labels]="rangeChartLabels"
+				                          [options]="chartOptions"
+				                          [colors]="chartColors"
+				                          [legend]="chartLegend"
+				                          [chartType]="chartType"></canvas>
+				                    </div>
+				                </ion-card-content>
+				            </ion-card>
+			            </ion-col>
+		            </ion-row>
+		            <ion-row>
+			            <ion-col col-3 >
+				            <ion-card *ngIf="isDataRangeByTypeAvailable" >
+				            	<ion-card-header class="data-card-header">
+				                	<ion-icon [name]="dataTypeIcon" color="white"> {{type.charAt(0).toUpperCase()+type.slice(1)}}</ion-icon>
+				              	</ion-card-header>  
+				                <ion-card-content>
+				                  	<br><br>
+				                  	<div class="chart">
+				                    <canvas baseChart width="400" height="400"
+				                          [datasets]="rangeChartData"
+				                          [labels]="rangeChartLabels"
+				                          [options]="chartOptions"
+				                          [colors]="chartColors"
+				                          [legend]="chartLegend"
+				                          [chartType]="chartType"></canvas>
+				                    </div>
+				                </ion-card-content>
+				            </ion-card>
+			            </ion-col>
+		            </ion-row>
+		            <ion-row>
+			            <ion-col col-4 >
+				            <ion-card *ngIf="isHgrDataAvailable" >
+				            	<ion-card-header class="data-card-header">
+				                	<ion-icon [name]="dataTypeIcon" color="white"> {{type}}</ion-icon>
+				              	</ion-card-header>  
+				                <ion-card-content>
+				                  	<br><br>
+				                  	<div class="chart">
+				                    <canvas baseChart width="400" height="400"
+				                          [datasets]="hgrChartData"
+				                          [labels]="hgrChartLabels"
+				                          [options]="chartOptions"
+				                          [colors]="chartColors"
+				                          [legend]="chartLegend"
+				                          [chartType]="chartType"></canvas>
+				                    </div>
+				                </ion-card-content>
+				            </ion-card>
+			            </ion-col>
+		            </ion-row>
+	            </ion-grid>
+	        </ion-col>
+		</ion-row>
+	</ion-grid>
+
+</ion-content>

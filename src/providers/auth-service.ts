@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService {
-  private authState: Observable<firebase.User>;
   private currentUser: firebase.User;
-  private providerData : any;
+  private name="";
+  private photo="";
+  private email="";
+  private nick="";
   constructor(public afAuth: AngularFireAuth) {
-    this.authState = afAuth.authState;
-    this.authState.subscribe((user: firebase.User) => {
+    afAuth.authState.subscribe((user: firebase.User) => {
       this.currentUser = user;
-      this.providerData = this.currentUser.providerData[0];
+      if (this.currentUser!=null) {
+        this.name = this.currentUser.providerData[0].displayName;
+        this.email = this.currentUser.providerData[0].email;
+        this.photo = this.currentUser.providerData[0].photoURL;
+        this.nick = this.currentUser.providerData[0].email.slice(0,this.currentUser.providerData[0].email.indexOf("@"));
+      }
     });
 
   }
@@ -32,15 +37,14 @@ export class AuthService {
 
   displayEmail(): string {
     if(this.currentUser != null) {
-      return this.currentUser.email;
+      return this.currentUser.providerData[0].email;
     } else {
       return "nullemail";
     }
   }
   displayNick(): string {
     if(this.currentUser != null) {
-      var email = this.currentUser.email;
-      return email.slice(0,email.indexOf("@"));
+      return this.currentUser.providerData[0].email.slice(0,this.currentUser.providerData[0].email.indexOf("@"));
     } else {
       return "nullnick";
     }
@@ -48,7 +52,7 @@ export class AuthService {
 
   displayPhoto(): string {
     if (this.currentUser !== null) {
-      return this.currentUser.photoURL;
+      return this.photo;
     } else {
       return 'nullphoto';
     }
@@ -56,7 +60,7 @@ export class AuthService {
 
   displayName(): string {
     if (this.currentUser !== null) {
-      return this.currentUser.displayName;
+      return this.name;
     } else {
       return 'nullname';
     }

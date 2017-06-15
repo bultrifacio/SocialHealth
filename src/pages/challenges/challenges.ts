@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from '../../providers/auth-service';
-import { ProfilePage } from '../profile/profile';
-import { Challenge } from './challenge';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -17,16 +15,15 @@ export class ChallengesPage {
   friends : any;
   challenges : any;
   challengeData : any;
-  fields = ['Cantidad','Objetivo','Tiempo'];
+  fields = ['Cantidad','Objetivo'];
   challengesKeys : any;
   challengesNames : any;
   selectedFriends:string[] = [];
   constructor(public formBuilder : FormBuilder,public af: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams ,private _auth: AuthService) {
     this.challengeForm = formBuilder.group({
-      name: ['', Validators.compose([Validators.required, Validators.pattern('^[a-z0-9]*$')])],
+      name: ['', Validators.compose([Validators.required, Validators.pattern('^[a-z.A-Z_ 0-9]*$')])],
       objective: ['', Validators.required],
-      quantity: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
-      time: ['', Validators.required]
+      quantity: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])]
     });
     
     this.challengeRef = af.list('/challenges/'+this._auth.displayNick()+'/');
@@ -49,7 +46,9 @@ export class ChallengesPage {
           if (_data.key=="nombre") {
             this.challengesNames.push(_data.val());
           }else{
-            this.challengeData.push(_data.val());  
+            if (_data.key!="porcentaje") {
+              this.challengeData.push(_data.val()); 
+            }
           }
       });
         this.challenges.push(this.challengeData);
@@ -77,16 +76,17 @@ export class ChallengesPage {
         nombre : this.challengeForm.controls.name.value,
         cantidad : this.challengeForm.controls.quantity.value,
         objetivo : this.challengeForm.controls.objective.value,
-        tiempo : this.challengeForm.controls.time.value
+        porcentaje : "0"
       });
       for (var friend of this.selectedFriends) {
         this.af.list('/challenges/'+friend+'/').push({
           nombre : this.challengeForm.controls.name.value,
           cantidad : this.challengeForm.controls.quantity.value,
           objetivo : this.challengeForm.controls.objective.value,
-          tiempo : this.challengeForm.controls.time.value
+          porcentaje : "0"
         });
     }
+    this.challengeForm.reset();
   }
     
     
@@ -104,7 +104,9 @@ export class ChallengesPage {
           if (_data.key=="nombre") {
             this.challengesNames.push(_data.val());
           }else{
-            this.challengeData.push(_data.val());  
+            if (_data.key!="porcentaje") {
+              this.challengeData.push(_data.val()); 
+            }
           }
       });
         this.challenges.push(this.challengeData);
