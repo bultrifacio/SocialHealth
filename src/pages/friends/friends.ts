@@ -18,14 +18,8 @@ export class FriendsPage {
   challengesNames : any;
   challengesProgress: any;
   friendsNames: any;
-  /*
-  allFriendsData: {items: FirebaseListObservable<any>, name: string, 
-    photo: FirebaseObjectObservable<any>,challenges: any[], 
-    challengesNames: String[], challengesProgress: any[]}[];*/
-    allFriendsData;
-  //chart
+  allFriendsData;
   chartLegend:boolean = false;
-  //challenges
   fields = ['Cantidad','Objetivo'];
   isFriendsAvailable: boolean = false;
   areChallengesAvarilable: boolean = false;
@@ -44,7 +38,6 @@ export class FriendsPage {
       pointHoverBorderColor: 'rgba(248,177,54,0.8)'
     }
   ];
-  //end chart
   constructor(public navCtrl: NavController, public af: AngularFireDatabase, public navParams: NavParams, private _auth: AuthService) {
     this.icons = ['flame','map','walk','moon'];
     this.units = ['kcal','km','','h'];
@@ -62,11 +55,6 @@ export class FriendsPage {
       let photo = "assets/img/user_icon300.jpg";
       _friends.forEach(_friend => {
         _friend.forEach(_data => {
-          /*let photoUrl = af.object('/users/'+_data.val()+'/', { preserveSnapshot: true });
-          photoUrl.subscribe(snapshot => {
-            photo = snapshot.val();
-          });*/
-
           af.list('/challenges/'+_data.val(), { preserveSnapshot: true }).subscribe(_challenges => {
             this.challengeData = [];
             _challenges.forEach(_challenge =>{
@@ -86,8 +74,7 @@ export class FriendsPage {
               this.challengeData = [];
             });
             this.allFriendsData.push({
-              //items: af.list('/daily/+this.today+'/'+_data.key),
-              items: af.list('/daily/28-04-2017/'+_data.val(), {
+              items: af.list('/daily/'+this.today+'/'+_data.val(), {
                 query: {
                   limitToFirst : 3,
                   orderByKey : true
@@ -104,14 +91,11 @@ export class FriendsPage {
             this.challengesProgress = [];
             this.challengesNames = [];
           });
-          
-         
       });
       this.isFriendsAvailable = true;
     });
     });
   }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad Friends');
   }

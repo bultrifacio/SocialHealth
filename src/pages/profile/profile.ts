@@ -10,7 +10,6 @@ import * as firebase from 'firebase/app';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-
   isDailyDataAvailable: boolean = false;
   areFriendsAvailable: boolean = false;
   measurements: FirebaseObjectObservable<any>;
@@ -40,12 +39,9 @@ export class ProfilePage {
   itemGlucose;
   instants = [];
   isUserInfoAvailable: boolean = false;
-  //Charts
   chartLegend:boolean = false;
-  //challenges
   fields = ['Cantidad','Objetivo'];
   areChallengesAvailable: boolean = false;
-  //HeartRate
   heartRateChartData;
   heartRateLabels;
   heartRateChartType:string = 'bar';
@@ -76,7 +72,6 @@ export class ProfilePage {
       pointHoverBorderColor: 'rgba(248,177,54,0.8)'
     }
   ];
-  //Glucose
   glucoseChartType:string = 'line';
   isGlucoseAvailable: boolean = false;
   glucoseChartData;
@@ -107,7 +102,6 @@ export class ProfilePage {
       pointHoverBorderColor: 'rgba(248,177,54,0.8)'
     }
   ];
-  //end-Charts
   constructor(public navCtrl: NavController,public af: AngularFireDatabase, public navParams: NavParams, private _auth: AuthService) {
     if(!this.isAuthenticated()){
       this.navCtrl.push(LoginPage);
@@ -143,9 +137,8 @@ export class ProfilePage {
     this.getHourInstants();
     this.heartRateLabels = this.instants;
     this.glucoseLabels = this.instants;
-    //this.dailyItems = af.database.list('/daily/'+this.today+'/'+this.nick);
-    this.dailyItems = af.list('/daily/28-04-2017/'+this.nick);
-    af.list('/daily/28-04-2017/'+this.nick + '/', { preserveSnapshot: true }).subscribe(_items => {
+    this.dailyItems = af.list('/daily/'+this.today+'/'+this.nick);
+    af.list('/daily/'+this.today+'/'+this.nick + '/', { preserveSnapshot: true }).subscribe(_items => {
       this.dailyData= [];
       _items.forEach(_item =>{
         this.dailyData.push(_item.val());
@@ -156,13 +149,13 @@ export class ProfilePage {
     this.samplesGlucose = [];
     for (var moment of this.instants) {
       this.itemHeartRate = this.af.object('/heart-rate/' + this._auth.displayNick()
-        + '/28-04-2017/' + moment + '/',{ preserveSnapshot: true });
+        + this.today + moment + '/',{ preserveSnapshot: true });
       this.itemHeartRate.subscribe(heartRateValue => {
         this.samplesHeartRate.push(heartRateValue.val());
         this.updateHeartRateChart(this.samplesHeartRate.length);
       });
       this.itemGlucose = this.af.object('/glucose/' +this._auth.displayNick()
-        + '/28-04-2017/' + moment + '/',{ preserveSnapshot: true });
+        + this.today + moment + '/',{ preserveSnapshot: true });
       this.itemGlucose.subscribe(glucoseValue => {
         this.samplesGlucose.push(glucoseValue.val());
         this.updateGlucoseChart(this.samplesGlucose.length);
@@ -204,6 +197,9 @@ export class ProfilePage {
             }
           }
       });
+        if (isNaN(objective) || objective == null) {
+          objective = 0;
+        }
         let percentage = Math.ceil((objective*100)/quantity);
         if (percentage>100) {
           percentage=100;
@@ -216,7 +212,6 @@ export class ProfilePage {
       this.areChallengesAvailable=true;
     });
     this.isUserInfoAvailable = true;
-    
   }
   getHourInstants(): any{
     let hour = this.date.getHours();
@@ -225,14 +220,13 @@ export class ProfilePage {
     let endLimit = hour * 60 + minute;
     this.instants = [];
     for (var i = initLimit; i < endLimit; i++) {
-      //this.instants.push(this.addZero(hour)+":"+this.addZero(minute));
       if (minute==59) {
         hour++;
         minute = 0;
       }else{
         minute++;
       }
-      this.instants.push("11:"+this.addZero(minute));
+      this.instants.push(this.addZero(hour)+":"+this.addZero(minute));
     }
     return this.instants;
   }

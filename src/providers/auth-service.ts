@@ -20,21 +20,16 @@ export class AuthService {
         this.nick = this.currentUser.providerData[0].email.slice(0,this.currentUser.providerData[0].email.indexOf("@"));
       }
     });
-
   }
-
   get authenticated(): boolean {
     return this.currentUser !== null;
   }
-
-
   signInWithGoogle(): firebase.Promise<firebase.User>{
     return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }  
   signOut(): void {
     this.afAuth.auth.signOut();
   }
-
   displayEmail(): string {
     if(this.currentUser != null) {
       return this.currentUser.providerData[0].email;
@@ -49,7 +44,6 @@ export class AuthService {
       return "nullnick";
     }
   }
-
   displayPhoto(): string {
     if (this.currentUser !== null) {
       return this.photo;
@@ -57,7 +51,6 @@ export class AuthService {
       return 'nullphoto';
     }
   }
-
   displayName(): string {
     if (this.currentUser !== null) {
       return this.name;

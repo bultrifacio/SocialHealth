@@ -11,9 +11,9 @@ page-profile {
         float:left;
     }
     .user-card{
-      width: 100%;
+      width: auto;
+      min-width: 1800px;
       height: auto;
-      overflow: auto;
     }
     .background-image{
         background: url(../assets/img/aaa.jpg);

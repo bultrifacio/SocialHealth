@@ -46,7 +46,6 @@ export class FriendsSearchPage {
   getItems(ev: any) {
     this.initializeItems();
     let val = ev.target.value;
-
     if (val && val.trim() != '') {
         this.usersList = this.usersList.filter((item) => {
           return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
