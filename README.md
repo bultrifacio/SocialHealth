@@ -18,18 +18,19 @@ This project was done in a short time so that the style and other aspects of the
 
 ## What does the code do?
 
-![Picture](http://empleo.plocan.eu/static/plocan.png)
-![Picture](http://empleo.plocan.eu/static/plocan.png)
-![Picture](http://empleo.plocan.eu/static/plocan.png)
-![Picture](http://empleo.plocan.eu/static/plocan.png)
-![Picture](http://empleo.plocan.eu/static/plocan.png)
-![Picture](http://empleo.plocan.eu/static/plocan.png)
-![Picture](http://empleo.plocan.eu/static/plocan.png)
-![Picture](http://empleo.plocan.eu/static/plocan.png)
-![Picture](http://empleo.plocan.eu/static/plocan.png)
-![Picture](http://empleo.plocan.eu/static/plocan.png)
-![Picture](http://empleo.plocan.eu/static/plocan.png)
-![Picture](http://empleo.plocan.eu/static/plocan.png)
+![Picture](https://github.com/bultrifacio/SocialHealth/blob/master/pictures/1.JPG)
+![Picture](https://github.com/bultrifacio/SocialHealth/blob/master/pictures/2.JPG)
+![Picture](https://github.com/bultrifacio/SocialHealth/blob/master/pictures/3.JPG)
+![Picture](https://github.com/bultrifacio/SocialHealth/blob/master/pictures/4.JPG)
+![Picture](https://github.com/bultrifacio/SocialHealth/blob/master/pictures/5.JPG)
+![Picture](https://github.com/bultrifacio/SocialHealth/blob/master/pictures/6.JPG)
+![Picture](https://github.com/bultrifacio/SocialHealth/blob/master/pictures/7.JPG)
+![Picture](https://github.com/bultrifacio/SocialHealth/blob/master/pictures/8.JPG)
+![Picture](https://github.com/bultrifacio/SocialHealth/blob/master/pictures/9.JPG)
+![Picture](https://github.com/bultrifacio/SocialHealth/blob/master/pictures/10.JPG)
+![Picture](https://github.com/bultrifacio/SocialHealth/blob/master/pictures/11.JPG)
+![Picture](https://github.com/bultrifacio/SocialHealth/blob/master/pictures/12.JPG)
+![Picture](https://github.com/bultrifacio/SocialHealth/blob/master/pictures/13.JPG)
 
 
 ## What could the code do in the future?
